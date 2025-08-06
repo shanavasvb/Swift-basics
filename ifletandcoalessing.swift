@@ -6,3 +6,6 @@ else{
     print("nil")
 }
 
+let z : String? = nil
+let v=z ?? "null"
+print(v)
