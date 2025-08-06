@@ -1,4 +1,6 @@
 This file consists of the learning path of swift which i learned
+let vs var 
+___________________________________________________________________________________________________
 
 Git Variable declaration is mainly two types
 1)Var
@@ -19,9 +21,12 @@ ________
 
 The Main data types in swift are int float bool string 
 
+Date Function in swift
+__________________________________________________________________________________________________________
+
 Date() will return the current date and the date.now() will also return the current date.(note: You need to import Foundation before that as the date is a external function)
 
-the output will be 2025-08-05 11:17:41 +0000 to format this we can use dateformatter which will format the date DateFormatter() funcion and today.dateStyle=.full for styling which will give the output like Tuesday, 5 August 2025 
+the output will be 2025-08-05 11:17:41 +0000 to format this we can use DateFormatter which will format the date DateFormatter() funcion and today.dateStyle=.full for styling which will give the output like Tuesday, 5 August 2025 
 
 
 
