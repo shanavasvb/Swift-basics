@@ -127,3 +127,19 @@ Where:
 - `v` receives either the unwrapped value of `z` or the default value
 
 **Use Case:** Best for providing simple default values without complex conditional logic.
+
+
+
+### Force Unwrapping the optional(!)
+
+Force Unwrapping is done with the help of a ! mark . It is sone where the developer has a prior knowledge where the value will not be null.The Major Disadvantage is that if the value is null we are trying to force unwrap then the application will crash.
+
+
+```swift
+let userName:String? = Saritha
+let unwrappedName = userName!
+```
+
+
+
+##Tuple
