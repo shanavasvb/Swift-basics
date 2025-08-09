@@ -154,4 +154,4 @@ we can access the elements similar to that of array like positions 0 or 1 .we ca
 ```swift
 var info(String,Int)=(name:"Shanavas",age:19)
 ``` 
-so we can access by info.name or age instead of info.1 or info.0
+so we can access by `info.name` or age instead of info.1 or `info.0`
