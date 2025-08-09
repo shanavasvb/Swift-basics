@@ -141,5 +141,17 @@ let unwrappedName = userName!
 ```
 
 
+## Tuple
 
-##Tuple
+Tuple is for grouping two or more values with different data types inside a parenthesisi
+
+```swift
+var info(String,Int)=("shanavas",19)
+```
+
+we can access the elements similar to that of array like positions 0 or 1 .we can also add parameter like
+
+```swift
+var info(String,Int)=(name:"Shanavas",age:19)
+``` 
+so we can access by info.name or age instead of info.1 or info.0
