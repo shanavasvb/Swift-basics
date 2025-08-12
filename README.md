@@ -163,4 +163,8 @@ There are mainly two types of methods which are
 `1. init() ` : this will create a object and allocate a memory space in accordance with the space required
 `2.Deini()` : this will help to destroy the space created by init and will delete the memory allocation
 
-### ARC (Automatic Reference Counter)
+### **ARC (Automatic Reference Counter)**
+  
+  Automatic reference counter in swift is used to get the live count of objects inside of a memory.If we initialize a object using a ` init() ` then the **ARC** counter will go up  
+  If if `deinit()` then the **ARC** counter will come down.
+  *Higher count in  ARC it will slow down the application*
