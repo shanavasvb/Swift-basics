@@ -166,5 +166,6 @@ There are mainly two types of methods which are
 ### **ARC (Automatic Reference Counter)**
   
   Automatic reference counter in swift is used to get the live count of objects inside of a memory.If we initialize a object using a ` init() ` then the **ARC** counter will go up  
-  If if `deinit()` then the **ARC** counter will come down.
+  If if `deinit()` then the **ARC** counter will come down.  
+  
   *Higher count in  ARC it will slow down the application*
