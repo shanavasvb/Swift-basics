@@ -130,7 +130,7 @@ Where:
 
 
 
-### Force Unwrapping the optional(!)
+### Force Unwrapping the optional (!)
 
 Force Unwrapping is done with the help of a ! mark . It is sone where the developer has a prior knowledge where the value will not be null.The Major Disadvantage is that if the value is null we are trying to force unwrap then the application will crash.
 
@@ -155,3 +155,11 @@ we can access the elements similar to that of array like positions 0 or 1 .we ca
 var info(String,Int)=(name:"Shanavas",age:19)
 ``` 
 so we can access by `info.name` or age instead of info.1 or `info.0`
+
+## Object oriented Programming
+
+There are mainly two types of methods which are
+`1. init() ` : this will create a object and allocate a memory space in accordance with the space required
+`2.Deini()` : this will help to destroy the space created by init and will delete the memory allocation
+
+### ARC (Automatic Reference Counter)
