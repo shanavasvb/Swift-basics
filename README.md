@@ -158,7 +158,8 @@ so we can access by `info.name` or age instead of info.1 or `info.0`
 
 ## Object oriented Programming
 
-There are mainly two types of methods which are
+There are mainly two types of methods which are  
+
 `1. init() ` : this will create a object and allocate a memory space in accordance with the space required
 `2.Deini()` : this will help to destroy the space created by init and will delete the memory allocation
 
