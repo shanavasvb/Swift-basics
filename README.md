@@ -169,3 +169,32 @@ There are mainly two types of methods which are
   If if `deinit()` then the **ARC** counter will come down.  
   
   *Higher count in  ARC it will slow down the application*
+
+
+  ## Array V/s Sets
+
+### Array 
+  Arrays are used with in the parenthesis     
+  array keeps elements in order
+  ```swift
+  let x: [String] = ["apple","orange",mango"]
+  print(x)
+  for fruit in x
+     print(fruit)
+```
+
+
+  There are multiple methods in array which include first,last count etc.
+
+  in arrays we can use duplicate elements
+
+  ### Sets
+
+sets are similar to array we initialise similar to array but sets are faster than arra
+sets doesn't allow duplicate elements
+elements don't have any order
+```swift
+ let x : Set = [1,2,3,2]
+print(x)
+```
+this will print 1,2,3 
