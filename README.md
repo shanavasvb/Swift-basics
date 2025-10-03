@@ -198,3 +198,10 @@ elements don't have any order
 print(x)
 ```
 this will print 1,2,3 
+
+to access the first element  we can simply use 
+
+```swift
+let firstIndex = x.indices.first
+let lastIndex = x.indices.last
+```
