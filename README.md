@@ -187,6 +187,26 @@ There are mainly two types of methods which are
   There are multiple methods in array which include first,last count etc.
 
   in arrays we can use duplicate elements
+  to access the first element  we can simply use 
+
+```swift
+let firstIndex = x.indices.first
+let lastIndex = x.indices.last
+```
+
+To avoid array out of bound exception we can use the contains
+for example
+
+```swift
+if x.indices.contains[4]{
+  print (x[4])
+}
+```
+
+so we can safely access else we will get array out of bound exception
+
+
+to insert items at end we can use append and for specific position we can use insert function
 
   ### Sets
 
@@ -199,9 +219,3 @@ print(x)
 ```
 this will print 1,2,3 
 
-to access the first element  we can simply use 
-
-```swift
-let firstIndex = x.indices.first
-let lastIndex = x.indices.last
-```
