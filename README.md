@@ -247,3 +247,9 @@ this means we are declaring a dictionary with the key as the String and the valu
 
 Acessing items is using the key ` myitem["Apple"]` will retrieves true
 
+also another major advantage of dictionary is that even if there is not a key present we will still get the output as nil instead of crashing of the application
+
+There is no order to add an item we can use `append` or we can use `myitem["grapes"]=false`
+
+acessing items in dictionary is more faster and wont crash the application
+
