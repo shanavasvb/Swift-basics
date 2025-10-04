@@ -253,3 +253,37 @@ There is no order to add an item we can use `append` or we can use `myitem["grap
 
 acessing items in dictionary is more faster and wont crash the application
 
+## For Loop
+
+```swift
+for item in 1 .. <50{
+  print(item)
+}
+
+var myArray = ["apple","orange","grapes"]
+
+for item in myArray{
+  print(myArray)
+}
+```
+
+first is looping over numbers and the second one is looping over the data   so looping in the data is useful when we put conditional operators inside the loop
+
+```swift
+
+let allLessons ={
+  LessonModel (title: " Lesson1",isfavorite :true),
+    LessonModel (title: " Lesson2",isfavorite :false),
+  LessonModel (title: " Lesson3",isfavorite :true),
+  LessonModel (title: " Lesson4",isfavorite :false),
+}
+
+favoriteLesson : [LessonModel] =""
+for lesson in allLessons{
+  if lesson.isfavorite = true{
+    favoriteLesson.append(lesson)
+  }
+}
+
+```
+this loop will print the favorite lessons only
