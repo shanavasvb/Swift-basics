@@ -219,11 +219,31 @@ elements don't have any order
 print(x)
 ```
 this will print 1,2,3 
+
+**Array v/s Sets**
+
 | Feature          | Array                             | Set                           |
 | ---------------- | --------------------------------- | ----------------------------- |
-| **Duplicates**   | ✅ Allowed                         | ❌ Not allowed                 |
-| **Order**        | ✅ Maintains order of insertion    | ❌ Unordered                   |
-| **Index Access** | ✅ Access by index (`array[0]`)    | ❌ No index-based access       |
+| **Duplicates**   |  Allowed                         |  Not allowed                 |
+| **Order**        |  Maintains order of insertion    |  Unordered                   |
+| **Index Access** |  Access by index (`array[0]`)    |   No index-based access       |
 | **Performance**  | Linear time lookup (`O(n)`)       | Constant time lookup (`O(1)`) |
 | **Use Case**     | Ordered lists, duplicates allowed | Unique values, fast lookup    |
+
+## Dictonaries 
+
+dictionaries are using as the key value pair
+dictonaries are using the keys and keys cannot be duplicated 
+
+```swift
+
+var myitem : [String:Bool] = ["Apple":true, "orange":False]
+
+```
+
+this means we are declaring a dictionary with the key as the String and the value as a boolean
+
+### Accessing items in dictionaries
+
+Acessing items is using the key ` myitem["Apple"]` will retrieves true
 
