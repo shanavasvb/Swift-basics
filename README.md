@@ -207,6 +207,7 @@ so we can safely access else we will get array out of bound exception
 
 
 to insert items at end we can use append and for specific position we can use insert function
+similarly for remove items we can use remove function
 
   ### Sets
 
@@ -218,4 +219,11 @@ elements don't have any order
 print(x)
 ```
 this will print 1,2,3 
+| Feature          | Array                             | Set                           |
+| ---------------- | --------------------------------- | ----------------------------- |
+| **Duplicates**   | ✅ Allowed                         | ❌ Not allowed                 |
+| **Order**        | ✅ Maintains order of insertion    | ❌ Unordered                   |
+| **Index Access** | ✅ Access by index (`array[0]`)    | ❌ No index-based access       |
+| **Performance**  | Linear time lookup (`O(n)`)       | Constant time lookup (`O(1)`) |
+| **Use Case**     | Ordered lists, duplicates allowed | Unique values, fast lookup    |
 
