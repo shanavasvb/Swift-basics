@@ -287,3 +287,91 @@ for lesson in allLessons{
 
 ```
 this loop will print the favorite lessons only
+
+
+enumerated arrays is using for getting index of the array it will take uo the index and the data 
+  ```swift
+  for (index,lesson) in allLessons.enumerated(){
+      print("Index : \(index) || lessons : \(lesson))
+  }
+  ```
+which will the print index along with the data 
+
+## break and continue
+
+
+Both **`break`** and **`continue`** are control statements used in loops to change their flow — but they behave differently.
+
+---
+
+## 🚫 `break`
+
+**Stops** the loop **immediately** and exits it completely.  
+No further iterations will be executed.
+
+### 🧩 Example
+```swift
+for number in 1...5 {
+    if number == 3 {
+        break
+    }
+    print(number)
+}
+print("Loop ended")
+```
+
+### 🧾 Output
+```
+1
+2
+Loop ended
+```
+
+**Explanation:**  
+When `number` becomes `3`, the `break` statement is executed.  
+The loop **terminates instantly**, skipping the rest of the numbers.
+
+---
+
+## 🔁 `continue`
+
+**Skips** the current iteration and jumps to the **next one** of the loop.  
+The loop continues running for the remaining items.
+
+### 🧩 Example
+```swift
+for number in 1...5 {
+    if number == 3 {
+        continue
+    }
+    print(number)
+}
+print("Loop completed")
+```
+
+### 🧾 Output
+```
+1
+2
+4
+5
+Loop completed
+```
+
+**Explanation:**  
+When `number` equals `3`, the `continue` statement skips that iteration.  
+The loop moves directly to the next value (`4`).
+
+---
+
+## ⚖️ Difference Summary
+
+| Feature | `break` | `continue` |
+|----------|----------|------------|
+| **Effect** | Exits the loop completely | Skips current iteration |
+| **Loop Behavior** | Stops all remaining iterations | Continues with the next iteration |
+| **Usage** | When further looping is unnecessary | When a specific case should be skipped |
+| **Example Output** | Ends early | Skips specific item(s) |
+
+---
+
