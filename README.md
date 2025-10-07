@@ -414,4 +414,20 @@ or
 var premiumuser:[databse] = alluser.filter({
   $0 in user.premium
 })
-``` both of the code works the same
+```
+ both of the code works the same
+### sort
+
+sort in swift takes two input which includes of current array and array which needs to be compared (may be it will be the same)
+
+sample code is 
+```swift
+
+var sortedbyRoll : [database] = alluser.sort(user1 , user2 in 
+return user1.roll > user2.roll)
+  print(sortedbyRoll)
+
+```
+
+this will create a sorted array the user1 and user2 can be replaced by anythng like $0,$1
+
