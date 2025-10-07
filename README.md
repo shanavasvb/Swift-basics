@@ -2,9 +2,6 @@
 
 A curated, beginner-friendly study guide for learning core Swift language fundamentals—enhanced, corrected, and structured from original study notes.
 
-> “Write code that is safe by default, expressive in intent, and simple to reason about.”  
-> — A guiding philosophy of Swift
-
 ---
 
 ## Table of Contents
