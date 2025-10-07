@@ -1,478 +1,571 @@
-# Swift Learning Path - Study Guide
+# Swift Learning Path
 
-This document contains my personal learning path for Swift programming fundamentals.
+A curated, beginner-friendly study guide for learning core Swift language fundamentals—enhanced, corrected, and structured from original study notes.
 
----
-
-## Variable Declaration: `let` vs `var`
-
-Swift provides two primary ways to declare variables:
-
-### `var` - Mutable Variables
-- Used for variables that can be modified after declaration
-- Allows reassignment of values
-- Example:
-  ```swift
-  var x = 10
-  x = 20  // This is valid - no error
-  ```
-
-### `let` - Immutable Constants
-- Used for values that should not change after initial assignment
-- Attempting to modify will produce a compiler error
-- Example:
-  ```swift
-  let x = 10
-  x = 20  // This will produce an error
-  ```
-
-### Best Practices
-- Use `var` for dynamic state management in your application
-- Use `let` for restricting data flow and ensuring immutability
-- `let` is commonly preferred in Swift development when values don't need to change
-
-### Type Safety
-Swift is a type-safe language, meaning the compiler performs type checking before application execution. This helps reduce runtime errors by ensuring operations are only performed with compatible data types (e.g., you cannot add an integer to a string).
+> “Write code that is safe by default, expressive in intent, and simple to reason about.”  
+> — A guiding philosophy of Swift
 
 ---
 
-## Data Types
-
-The main primitive data types in Swift are:
-- `Int` - Integer values
-- `Float` - Floating-point numbers
-- `Bool` - Boolean values (true/false)
-- `String` - Text data
+## Table of Contents
+1. [Variables: `let` vs `var`](#variables-let-vs-var)  
+2. [Type Inference & Type Safety](#type-inference--type-safety)  
+3. [Core Data Types](#core-data-types)  
+4. [Dates & Formatting](#dates--formatting)  
+5. [Optionals](#optionals)  
+6. [Tuples](#tuples)  
+7. [Object-Oriented Basics & ARC](#object-oriented-basics--arc)  
+8. [Arrays vs Sets](#arrays-vs-sets)  
+9. [Dictionaries](#dictionaries)  
+10. [Loops](#loops)  
+11. [Control Flow: `break` vs `continue`](#control-flow-break-vs-continue)  
+12. [Higher-Order Functions: `filter`, `map`, `sorted`, `reduce`](#higher-order-functions-filter-map-sorted-reduce)  
+13. [Protocols](#protocols)  
+14. [SwiftUI View Protocol](#swiftui-view-protocol)  
+15. [Best Practices & Patterns](#best-practices--patterns)  
+16. [Common Pitfalls](#common-pitfalls)  
+17. [Next Steps](#next-steps)  
+18. [Additional Resources](#additional-resources)
 
 ---
 
-## Date Functions
+## Variables: `let` vs `var`
 
-### Basic Date Creation
+Swift provides two primary binding keywords:
+
+### `let` (Constant / Immutable)
+- Value cannot be reassigned after initialization.
+- Encourages safer, intention-revealing code.
+- Prefer `let` by default and only use `var` when mutation is required.
+
 ```swift
-Date()       // Returns current date and time
-Date.now()   // Also returns current date and time
+let maxLoginAttempts = 5
+// maxLoginAttempts = 6 // ❌ Compile-time error
 ```
 
-**Note:** You must import Foundation before using Date functions, as Date is an external function.
+### `var` (Variable / Mutable)
+- Use when the value needs to change.
+- Avoid excessive mutability to reduce bugs.
 
-### Default Output Format
-The default output appears as: `2025-08-05 11:17:41 +0000`
+```swift
+var username = "alice"
+username = "alice.dev" // ✅ Allowed
+```
 
-### Date Formatting
-To format dates for better readability:
+### Why Prefer `let`
+- Enables compiler optimizations.
+- Improves thread-safety reasoning.
+- Documents intent.
+
+---
+
+## Type Inference & Type Safety
+
+Swift infers types:
+
+```swift
+let count = 10        // Int
+let pi = 3.14159      // Double (default for floating literals)
+let isPro = true      // Bool
+let greeting = "Hi!"  // String
+```
+
+You can annotate explicitly:
+
+```swift
+let count: Int = 10
+```
+
+> Note: Swift is strongly typed—you cannot mix incompatible types without explicit conversion.
+
+---
+
+## Core Data Types
+
+| Type    | Description                          | Example                  |
+|---------|--------------------------------------|--------------------------|
+| `Int`   | Whole numbers                        | `let age: Int = 19`      |
+| `Double`| 64-bit floating point (default)      | `let price = 9.99`       |
+| `Float` | 32-bit floating point                | `let ratio: Float = 0.5` |
+| `Bool`  | Boolean                              | `let isActive = true`    |
+| `String`| Text data                            | `let name = "Swift"`     |
+| `Character` | Single scalar value              | `let ch: Character = "A"`|
+
+---
+
+## Dates & Formatting
+
+Requires `Foundation`:
+
+```swift
+import Foundation
+
+let now = Date()
+print(now)  // Raw default representation
+```
+
+### Formatting a Date
+
 ```swift
 let formatter = DateFormatter()
 formatter.dateStyle = .full
-// Output: "Tuesday, 5 August 2025"
+formatter.timeStyle = .short
+let formatted = formatter.string(from: now)
+print(formatted) // e.g. "Tuesday, 5 August 2025 at 11:17 AM"
 ```
+
+### ISO8601 Formatting
+
+```swift
+let isoFormatter = ISO8601DateFormatter()
+print(isoFormatter.string(from: now))
+```
+
+> Tip: Avoid storing formatted date strings—store raw `Date` and format on display.
 
 ---
 
-## Optional Values
+## Optionals
 
-Optional values in Swift represent variables that can either contain a value or be `nil` (null).
+An optional represents either a value or `nil`.
 
-### Declaration
 ```swift
-var x: String?  // Can hold a String value or nil
+var nickname: String? = nil
+nickname = "Shan"
 ```
 
-### Unwrapping Optionals
+### Unwrapping Techniques
 
-There are three main approaches to unwrap optional values:
+#### 1. If Let Binding
 
-#### 1. If Let
 ```swift
-if let y = x {
-    // Use y (unwrapped value)
+if let name = nickname {
+    print("Nickname: \(name)")
 } else {
-    // Handle nil case
+    print("No nickname set")
 }
 ```
 
-**Limitation:** Can create multiple nested else blocks when used in loops, making code less readable.
-
-**Use Case:** Preferred when you need to handle specific optional unwrapping scenarios.
-
-#### 2. Guard Let
-```swift
-guard let newValue = oldValue else {
-    // Handle nil case and exit
-    return  // or break/continue in loops
-}
-// Continue with newValue
-```
-
-**Key Points:**
-- Executes the else block first when the optional is nil
-- Must exit the else block using `return`, `break`, or `continue`
-- `break` and `continue` can only be used inside loops
-- `return` can only be used inside functions
-- Should be used within functions or loops
-- Remember to call the function to execute guard let logic
-
-**Use Case:** Preferred for most optional unwrapping scenarios due to cleaner code flow.
-
-#### 3. Nil Coalescing Operator (`??`)
-The nil coalescing operator provides a default value when an optional is nil.
+#### 2. Guard Let (Early Exit Pattern)
 
 ```swift
-let v = z ?? "null"
-```
-
-Where:
-- `z` is the optional value
-- `"null"` is the default value used if `z` is nil
-- `v` receives either the unwrapped value of `z` or the default value
-
-**Use Case:** Best for providing simple default values without complex conditional logic.
-
-
-
-### Force Unwrapping the optional (!)
-
-Force Unwrapping is done with the help of a ! mark . It is sone where the developer has a prior knowledge where the value will not be null.The Major Disadvantage is that if the value is null we are trying to force unwrap then the application will crash.
-
-
-```swift
-let userName:String? = Saritha
-let unwrappedName = userName!
-```
-
-
-## Tuple
-
-Tuple is for grouping two or more values with different data types inside a parenthesisi
-
-```swift
-var info(String,Int)=("shanavas",19)
-```
-
-we can access the elements similar to that of array like positions 0 or 1 .we can also add parameter like
-
-```swift
-var info(String,Int)=(name:"Shanavas",age:19)
-``` 
-so we can access by `info.name` or age instead of info.1 or `info.0`
-
-## Object oriented Programming
-
-There are mainly two types of methods which are  
-
-`1. init() ` : this will create a object and allocate a memory space in accordance with the space required
-`2.Deini()` : this will help to destroy the space created by init and will delete the memory allocation
-
-### **ARC (Automatic Reference Counter)**
-  
-  Automatic reference counter in swift is used to get the live count of objects inside of a memory.If we initialize a object using a ` init() ` then the **ARC** counter will go up  
-  If if `deinit()` then the **ARC** counter will come down.  
-  
-  *Higher count in  ARC it will slow down the application*
-
-
-  ## Array V/s Sets
-
-### Array 
-  Arrays are used with in the parenthesis     
-  array keeps elements in order
-  ```swift
-  let x: [String] = ["apple","orange",mango"]
-  print(x)
-  for fruit in x
-     print(fruit)
-```
-
-
-  There are multiple methods in array which include first,last count etc.
-
-  in arrays we can use duplicate elements
-  to access the first element  we can simply use 
-
-```swift
-let firstIndex = x.indices.first
-let lastIndex = x.indices.last
-```
-
-To avoid array out of bound exception we can use the contains
-for example
-
-```swift
-if x.indices.contains[4]{
-  print (x[4])
-}
-```
-
-so we can safely access else we will get array out of bound exception
-
-
-to insert items at end we can use append and for specific position we can use insert function
-similarly for remove items we can use remove function
-
-  ### Sets
-
-sets are similar to array we initialise similar to array but sets are faster than arra
-sets doesn't allow duplicate elements
-elements don't have any order
-```swift
- let x : Set = [1,2,3,2]
-print(x)
-```
-this will print 1,2,3 
-
-**Array v/s Sets**
-
-| Feature          | Array                             | Set                           |
-| ---------------- | --------------------------------- | ----------------------------- |
-| **Duplicates**   |  Allowed                         |  Not allowed                 |
-| **Order**        |  Maintains order of insertion    |  Unordered                   |
-| **Index Access** |  Access by index (`array[0]`)    |   No index-based access       |
-| **Performance**  | Linear time lookup (`O(n)`)       | Constant time lookup (`O(1)`) |
-| **Use Case**     | Ordered lists, duplicates allowed | Unique values, fast lookup    |
-
-## Dictonaries 
-
-dictionaries are using as the key value pair
-dictonaries are using the keys and keys cannot be duplicated 
-
-```swift
-
-var myitem : [String:Bool] = ["Apple":true, "orange":False]
-
-```
-
-this means we are declaring a dictionary with the key as the String and the value as a boolean
-
-### Accessing items in dictionaries
-
-Acessing items is using the key ` myitem["Apple"]` will retrieves true
-
-also another major advantage of dictionary is that even if there is not a key present we will still get the output as nil instead of crashing of the application
-
-There is no order to add an item we can use `append` or we can use `myitem["grapes"]=false`
-
-acessing items in dictionary is more faster and wont crash the application
-
-## For Loop
-
-```swift
-for item in 1 .. <50{
-  print(item)
-}
-
-var myArray = ["apple","orange","grapes"]
-
-for item in myArray{
-  print(myArray)
-}
-```
-
-first is looping over numbers and the second one is looping over the data   so looping in the data is useful when we put conditional operators inside the loop
-
-```swift
-
-let allLessons ={
-  LessonModel (title: " Lesson1",isfavorite :true),
-    LessonModel (title: " Lesson2",isfavorite :false),
-  LessonModel (title: " Lesson3",isfavorite :true),
-  LessonModel (title: " Lesson4",isfavorite :false),
-}
-
-favoriteLesson : [LessonModel] =""
-for lesson in allLessons{
-  if lesson.isfavorite = true{
-    favoriteLesson.append(lesson)
-  }
-}
-
-```
-this loop will print the favorite lessons only
-
-
-enumerated arrays is using for getting index of the array it will take uo the index and the data 
-  ```swift
-  for (index,lesson) in allLessons.enumerated(){
-      print("Index : \(index) || lessons : \(lesson))
-  }
-  ```
-which will the print index along with the data 
-
-## break and continue
-
-
-Both **`break`** and **`continue`** are control statements used in loops to change their flow — but they behave differently.
-
----
-
-## 🚫 `break`
-
-**Stops** the loop **immediately** and exits it completely.  
-No further iterations will be executed.
-
-### 🧩 Example
-```swift
-for number in 1...5 {
-    if number == 3 {
-        break
+func greet(nickname: String?) {
+    guard let name = nickname else {
+        print("No nickname – exiting")
+        return
     }
-    print(number)
+    print("Hello, \(name)")
 }
-print("Loop ended")
 ```
 
-### 🧾 Output
-```
-1
-2
-Loop ended
+#### 3. Nil Coalescing (`??`)
+
+```swift
+let display = nickname ?? "Guest"
+print(display)
 ```
 
-**Explanation:**  
-When `number` becomes `3`, the `break` statement is executed.  
-The loop **terminates instantly**, skipping the rest of the numbers.
+#### 4. Force Unwrapping (`!`) – Avoid Unless Guaranteed Non-nil
+
+```swift
+let userName: String? = "Saritha"
+let unwrapped = userName! // ⚠️ Crashes if userName == nil
+```
+
+> Warning: Prefer safe unwrapping. Force unwrap only when logically impossible to be nil (e.g., IBOutlets after view loading).
+
+#### 5. Optional Chaining
+
+```swift
+let length = nickname?.count  // Int?
+```
 
 ---
 
-## 🔁 `continue`
+## Tuples
 
-**Skips** the current iteration and jumps to the **next one** of the loop.  
-The loop continues running for the remaining items.
+Group multiple values temporarily:
 
-### 🧩 Example
 ```swift
-for number in 1...5 {
-    if number == 3 {
-        continue
+var info: (String, Int) = ("Shanavas", 19)
+print(info.0) // "Shanavas"
+print(info.1) // 19
+```
+
+Named elements:
+
+```swift
+let user = (name: "Shanavas", age: 19)
+print(user.name) // "Shanavas"
+```
+
+> Use structs instead of tuples for long-lived or semantic data.
+
+---
+
+## Object-Oriented Basics & ARC
+
+### Initialization & Deinitialization
+
+```swift
+class Player {
+    let name: String
+    init(name: String) {
+        self.name = name
+        print("Player \(name) created")
     }
-    print(number)
+    deinit {
+        print("Player \(name) deallocated")
+    }
 }
-print("Loop completed")
 ```
 
-### 🧾 Output
-```
-1
-2
-4
-5
-Loop completed
-```
+### ARC (Automatic Reference Counting)
 
-**Explanation:**  
-When `number` equals `3`, the `continue` statement skips that iteration.  
-The loop moves directly to the next value (`4`).
-
----
-
-## ⚖️ Difference Summary
-
-| Feature | `break` | `continue` |
-|----------|----------|------------|
-| **Effect** | Exits the loop completely | Skips current iteration |
-| **Loop Behavior** | Stops all remaining iterations | Continues with the next iteration |
-| **Usage** | When further looping is unnecessary | When a specific case should be skipped |
-| **Example Output** | Ends early | Skips specific item(s) |
-
----
-
-## **Filter Sort and Map in swift** 
-
-### Filter
+- Increases reference count on strong ownership.
+- Deallocates when count reaches zero.
+- Avoid retain cycles with `weak` / `unowned`:
 
 ```swift
-
-struct database{
-  String name,
-  int roll,
-  bool ispremium
+class Owner {
+    var pet: Pet?
 }
-var alluser : [database]=[database("shanavas" 10,false),
-database("sidharth" ,12,true),
-database("sumi" ,12,true)
+
+class Pet {
+    weak var owner: Owner? // prevents retain cycle
+}
+```
+
+---
+
+## Arrays vs Sets
+
+### Arrays
+
+```swift
+var fruits: [String] = ["Apple", "Orange", "Mango", "Apple"]
+
+print(fruits.first ?? "Empty")
+print(fruits.count)
+
+if fruits.indices.contains(2) {
+    print(fruits[2])
+}
+fruits.append("Pear")
+```
+
+### Sets
+
+```swift
+var ids: Set<Int> = [1, 2, 3, 2]
+print(ids) // Unordered, unique elements
+ids.insert(4)
+```
+
+### Comparison
+
+| Feature          | Array                         | Set                          |
+|------------------|-------------------------------|------------------------------|
+| Order            | Preserves insertion order     | Unordered                    |
+| Duplicates       | Allowed                       | Not allowed                  |
+| Membership Check | O(n)                          | O(1) average                 |
+| Index Access     | Yes                           | No                           |
+| Use Case         | Ordered collections           | Unique, fast lookup          |
+
+---
+
+## Dictionaries
+
+Key–value storage (keys unique, unordered):
+
+```swift
+var stock: [String: Int] = [
+    "Apple": 10,
+    "Orange": 5
 ]
 
-var premiumuser:[database] =[]
-for user in alluser{
-  if user.ispremium{
-    premiumuser.append (user)
-  }
-}
-
-
+stock["Banana"] = 7       // Insert
+let oranges = stock["Orange"] // Optional Int
 ```
 
-we can use this line by using the filter
+Safe access:
 
 ```swift
-
-var premiumuser:[database] = alluser.filter({
-  user in user.ispremium
-})
-
-or 
-
-var premiumuser:[databse] = alluser.filter({
-  $0 in user.premium
-})
-```
- both of the code works the same
-### sort
-
-sort in swift takes two input which includes of current array and array which needs to be compared (may be it will be the same)
-
-sample code is 
-```swift
-
-var sortedbyRoll : [database] = alluser.sort(user1 , user2 in 
-return user1.roll > user2.roll)
-  print(sortedbyRoll)
-
-```
-
-this will create a sorted array the user1 and user2 can be replaced by anythng like $0,$1
-
-### Map
-
-to convert one datatype to another like imagine from the database i only need the name 
-```swift
-var username:[String] = alluser.map({user in 
-return user.name})
-print(usernames)
-
-```
-
-this will print all the usernames
-
-
-## Protocol in swift
-
-protocol is a list of rules or requirements a object has to follow
-
-```swift
-
-struct employeemodel : employeehasName{
-  name:String,
-  roll:int
-}
-
-protocol employeehasName{
-  let name :String
-}
-
-```
-
-in this code the employeemodel follows the protocol the employeehasName
-so nothing will happens if the employee doesn't follow the rules 
-if there's no name in the employeemodel a error will arise 
-
-## SwiftUIView Protocol
-
-```struct contentView:View{
-  var body : some view{
-    Text("Helo world)
-  }
+if let appleCount = stock["Apple"] {
+    print("Apples: \(appleCount)")
+} else {
+    print("No apples tracked")
 }
 ```
-here the view binded together with the contentview is a protocol so we need to check whether it have some view inside it 
 
-  
+Update with fallback:
+
+```swift
+let old = stock.updateValue(12, forKey: "Apple")
+```
+
+---
+
+## Loops
+
+### For-In Over Range
+
+```swift
+for number in 1..<5 { // 1,2,3,4
+    print(number)
+}
+
+for number in 1...5 {  // 1,2,3,4,5
+    print(number)
+}
+```
+
+### Loop Over Collections
+
+```swift
+let fruits = ["Apple", "Orange", "Mango"]
+for fruit in fruits {
+    print(fruit)
+}
+```
+
+### Enumerated
+
+```swift
+for (index, fruit) in fruits.enumerated() {
+    print("\(index): \(fruit)")
+}
+```
+
+---
+
+## Control Flow: `break` vs `continue`
+
+```swift
+for n in 1...5 {
+    if n == 3 { break }
+    print(n)
+}
+// Prints 1 2
+```
+
+```swift
+for n in 1...5 {
+    if n == 3 { continue }
+    print(n)
+}
+// Prints 1 2 4 5
+```
+
+| Statement | Behavior                    |
+|-----------|-----------------------------|
+| `break`   | Exits loop completely       |
+| `continue`| Skips current iteration     |
+
+---
+
+## Higher-Order Functions: `filter`, `map`, `sorted`, `reduce`
+
+### Example Data
+
+```swift
+struct User {
+    let name: String
+    let roll: Int
+    let isPremium: Bool
+}
+
+let allUsers: [User] = [
+    User(name: "Shanavas", roll: 10, isPremium: false),
+    User(name: "Sidharth", roll: 12, isPremium: true),
+    User(name: "Sumi", roll: 11, isPremium: true)
+]
+```
+
+### Imperative Filtering (Verbose)
+
+```swift
+var premiumUsers: [User] = []
+for user in allUsers where user.isPremium {
+    premiumUsers.append(user)
+}
+```
+
+### Functional Equivalent
+
+```swift
+let premiumUsers = allUsers.filter { $0.isPremium }
+```
+
+### Map (Transform)
+
+```swift
+let premiumNames = premiumUsers.map { $0.name }
+```
+
+### Sorted (Non-Mutating) vs sort (Mutating)
+
+```swift
+let sortedByRollDesc = allUsers.sorted { $0.roll > $1.roll }
+// Original allUsers unchanged
+```
+
+### Reduce (Aggregation)
+
+```swift
+let totalRolls = allUsers.reduce(0) { $0 + $1.roll }
+```
+
+> Tip: Prefer chainable functional style for clarity when transformations are pure.
+
+---
+
+## Protocols
+
+Define required methods/properties:
+
+```swift
+protocol HasName {
+    var name: String { get }
+}
+
+struct Employee: HasName {
+    let name: String
+    let id: Int
+}
+```
+
+Protocol with behavior:
+
+```swift
+protocol Describable {
+    func describe() -> String
+}
+
+extension Employee: Describable {
+    func describe() -> String {
+        "Employee \(name) (#\(id))"
+    }
+}
+```
+
+> Note: Use protocols to enable abstraction and testability.
+
+---
+
+## SwiftUI View Protocol
+
+```swift
+import SwiftUI
+
+struct ContentView: View {
+    var body: some View {
+        Text("Hello, world!")
+            .font(.title)
+            .padding()
+    }
+}
+```
+
+- Conformance requires a `body` returning `some View`.
+- `some` indicates an opaque type (compile-time specialization).
+
+---
+
+## Best Practices & Patterns
+
+| Topic                   | Recommendation |
+|-------------------------|---------------|
+| Mutability              | Prefer `let` |
+| Optionals               | Use `guard` early exits |
+| Force Unwrap            | Avoid unless logically guaranteed |
+| Naming                  | CamelCase (`userName`, `isPremium`) |
+| Collections             | Use `Set` for uniqueness |
+| Protocols               | Model behavior, not data only |
+| Functional Methods      | Use for readability & immutability |
+| Error Safety            | Prefer optional unwrapping over crashes |
+| SwiftUI                 | Keep views small & composable |
+
+---
+
+## Common Pitfalls
+
+| Pitfall | Issue | Fix |
+|---------|-------|-----|
+| Force unwrap | Crashes on nil | Use `if let` / `guard let` |
+| Misusing dictionary append | Dictionaries don't have `append` | Use assignment |
+| Typos in boolean (`False`) | Swift is case-sensitive | Use `false` |
+| Using `sort` expecting new array | `sort` mutates | Use `sorted` |
+| Tuple overuse | Becomes unreadable | Use a struct |
+| Retain cycles | Memory leaks | Use `weak` / `unowned` |
+| Array out-of-bounds | Runtime crash | Check `indices.contains(index)` |
+
+---
+
+## Next Steps
+
+1. Learn Error Handling (`throws`, `try?`, `do/catch`)
+2. Explore Enums with Associated Values
+3. Understand Struct vs Class semantics (value vs reference)
+4. Practice `Codable` for JSON parsing
+5. Learn Concurrency (`async/await`, `Task`)
+6. Build a small SwiftUI app
+
+---
+
+## Additional Resources
+
+| Resource | Link |
+|----------|------|
+| Official Swift Language Guide | https://docs.swift.org/swift-book/ |
+| Swift Evolution Proposals | https://github.com/apple/swift-evolution |
+| Hacking with Swift (Free Tutorials) | https://www.hackingwithswift.com |
+| Swift Standard Library Reference | https://developer.apple.com/documentation/swift |
+| SwiftUI Documentation | https://developer.apple.com/documentation/swiftui |
+
+---
+
+## Practice Challenge Ideas
+
+1. Build a `UserManager` that filters, sorts, and groups users.
+2. Create a `Cache` protocol and two implementations (in-memory & disk).
+3. Write a mini SwiftUI list rendering favorite lessons.
+4. Parse JSON into model structs using `Codable`.
+
+---
+
+## Quick Reference Snippets
+
+Optional Safe Access:
+
+```swift
+let value = optionalVar ?? defaultValue
+```
+
+Safe Array Index:
+
+```swift
+extension Array {
+    subscript(safe index: Index) -> Element? {
+        indices.contains(index) ? self[index] : nil
+    }
+}
+```
+
+Protocol with Default Implementation:
+
+```swift
+protocol Taggable {
+    var tag: String { get }
+}
+
+extension Taggable {
+    var tag: String { "UNDEFINED" }
+}
+```
+
+---
+
+> Keep iterating on these notes—teaching what you learn reinforces mastery.  
+> Feel free to adapt or expand this README as your Swift journey progresses.
+
