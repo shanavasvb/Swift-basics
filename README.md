@@ -375,3 +375,43 @@ The loop moves directly to the next value (`4`).
 
 ---
 
+## **Filter Sort and Map in swift** 
+
+### Filter
+
+```swift
+
+struct database{
+  String name,
+  int roll,
+  bool ispremium
+}
+var alluser : [database]=[database("shanavas" 10,false),
+database("sidharth" ,12,true),
+database("sumi" ,12,true)
+]
+
+var premiumuser:[database] =[]
+for user in alluser{
+  if user.ispremium{
+    premiumuser.append (user)
+  }
+}
+
+
+```
+
+we can use this line by using the filter
+
+```swift
+
+var premiumuser:[database] = alluser.filter({
+  user in user.ispremium
+})
+
+or 
+
+var premiumuser:[databse] = alluser.filter({
+  $0 in user.premium
+})
+``` both of the code works the same
