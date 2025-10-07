@@ -465,3 +465,14 @@ in this code the employeemodel follows the protocol the employeehasName
 so nothing will happens if the employee doesn't follow the rules 
 if there's no name in the employeemodel a error will arise 
 
+## SwiftUIView Protocol
+
+```struct contentView:View{
+  var body : some view{
+    Text("Helo world)
+  }
+}
+```
+here the view binded together with the contentview is a protocol so we need to check whether it have some view inside it 
+
+  
