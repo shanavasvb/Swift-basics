@@ -442,3 +442,26 @@ print(usernames)
 ```
 
 this will print all the usernames
+
+
+## Protocol in swift
+
+protocol is a list of rules or requirements a object has to follow
+
+```swift
+
+struct employeemodel : employeehasName{
+  name:String,
+  roll:int
+}
+
+protocol employeehasName{
+  let name :String
+}
+
+```
+
+in this code the employeemodel follows the protocol the employeehasName
+so nothing will happens if the employee doesn't follow the rules 
+if there's no name in the employeemodel a error will arise 
+
