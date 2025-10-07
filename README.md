@@ -431,3 +431,14 @@ return user1.roll > user2.roll)
 
 this will create a sorted array the user1 and user2 can be replaced by anythng like $0,$1
 
+### Map
+
+to convert one datatype to another like imagine from the database i only need the name 
+```swift
+var username:[String] = alluser.map({user in 
+return user.name})
+print(usernames)
+
+```
+
+this will print all the usernames
