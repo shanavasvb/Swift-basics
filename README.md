@@ -19,10 +19,11 @@ A curated, beginner-friendly study guide for learning core Swift language fundam
 12. [Higher-Order Functions: `filter`, `map`, `sorted`, `reduce`](#higher-order-functions-filter-map-sorted-reduce)  
 13. [Protocols](#protocols)  
 14. [SwiftUI View Protocol](#swiftui-view-protocol)  
-15. [Best Practices & Patterns](#best-practices--patterns)  
-16. [Common Pitfalls](#common-pitfalls)  
-17. [Next Steps](#next-steps)  
-18. [Additional Resources](#additional-resources)
+15. [User Authentication Example](#user-authentication-example)  
+16. [Best Practices & Patterns](#best-practices--patterns)  
+17. [Common Pitfalls](#common-pitfalls)  
+18. [Next Steps](#next-steps)  
+19. [Additional Resources](#additional-resources)
 
 ---
 
@@ -466,6 +467,89 @@ struct ContentView: View {
 
 - Conformance requires a `body` returning `some View`.
 - `some` indicates an opaque type (compile-time specialization).
+
+---
+
+## User Authentication Example
+
+A practical demonstration combining multiple Swift concepts: structs, classes, optionals, guard statements, and dictionaries.
+
+See `UserAuthentication.swift` for a complete working example.
+
+### Key Concepts Demonstrated
+
+```swift
+struct User {
+    let username: String
+    let password: String
+    let email: String?
+}
+
+class AuthenticationManager {
+    private var registeredUsers: [String: User] = [:]
+    private var currentUser: User?
+    
+    @discardableResult
+    func register(username: String, password: String, email: String? = nil) -> Bool {
+        // Guard against duplicate usernames
+        guard registeredUsers[username] == nil else {
+            print("Username already exists")
+            return false
+        }
+        
+        // Validate password strength
+        guard password.count >= 6 else {
+            print("Password too weak")
+            return false
+        }
+        
+        registeredUsers[username] = User(username: username, password: password, email: email)
+        return true
+    }
+    
+    @discardableResult
+    func login(username: String, password: String) -> Bool {
+        // Safe unwrapping with guard let
+        guard let user = registeredUsers[username] else {
+            print("User not found")
+            return false
+        }
+        
+        guard user.password == password else {
+            print("Invalid password")
+            return false
+        }
+        
+        currentUser = user
+        return true
+    }
+}
+```
+
+### Features
+
+- **User Registration**: Validates username uniqueness and password strength
+- **User Login**: Authenticates with username and password
+- **Session Management**: Tracks currently logged-in user
+- **Optional Handling**: Safe unwrapping with `guard let` and `if let`
+- **Nil Coalescing**: Default values for optional email addresses
+
+### Usage
+
+```swift
+let auth = AuthenticationManager()
+
+auth.register(username: "alice", password: "secure123", email: "alice@example.com")
+auth.login(username: "alice", password: "secure123")
+auth.displayUserInfo()
+auth.logout()
+```
+
+Run the example:
+
+```bash
+swift UserAuthentication.swift
+```
 
 ---
 
